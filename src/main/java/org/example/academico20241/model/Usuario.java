@@ -21,6 +21,13 @@ public class Usuario {
         this.idade = idade;
     }
     
+    public Usuario(DadosUsuarioInserirDTO dto) {
+        this.nome = dto.nome();
+        this.idade = dto.idade();
+        this.senha = dto.senha();
+    }
+    
+    
     public Long getId() {
         return id;
     }
