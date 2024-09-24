@@ -6,6 +6,8 @@ import org.example.academico20241.model.Usuario;
 import org.example.academico20241.model.UsuarioListagemDTO;
 import org.example.academico20241.servico.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,8 +39,14 @@ public class UsuarioControlador {
     }
     
     @PostMapping
-    public Usuario inserir(@RequestBody @Valid DadosUsuarioInserirDTO usuario){
-        return this.service.inserir(usuario);
+    public ResponseEntity<Usuario> inserir(@RequestBody @Valid DadosUsuarioInserirDTO usuario){
+        Usuario usuarioInserido;
+        try {
+            usuarioInserido = this.service.inserir(usuario);
+            return new ResponseEntity<>(usuarioInserido, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
     
     @PutMapping("/{id}")
